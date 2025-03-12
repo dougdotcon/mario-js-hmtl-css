@@ -1,148 +1,434 @@
- @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
-
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Press Start 2P', cursive;
 }
 
-#reiniciar-jogo{
-    background-color: gold;
-    height: 30px;
+body {
+    background-color: #1a1a1a;
+    color: white;
 }
-h5{
+
+/* Botões e controles */
+.btn-primary {
+    background: #e52521;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 0 #a01c19;
+}
+
+.btn-primary:hover {
+    background: #c41e1a;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #a01c19;
+}
+
+.btn-secondary {
+    background: #4a6cd4;
+    color: white;
+    border: none;
+    padding: 15px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 0 #2a4cb4;
+    margin-left: 10px;
+}
+
+.btn-secondary:hover {
+    background: #3a5cc4;
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 #2a4cb4;
+}
+
+h5 {
     font-size: 20px;
 }
 
-.game-board{
- width: 100%;
- height: 500px;
- border-bottom: 15px solid rgb(10, 126, 25);
- margin: 0 auto;
- position: relative;
- overflow: hidden;
- background:linear-gradient(#87ceeb, #e0f6ff);
+/* Área principal do jogo */
+.game-board {
+    width: 100%;
+    height: 500px;
+    border-bottom: 15px solid rgb(35, 161, 50);
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(#5c94fc, #c0e8ff);
+    box-shadow: 0 0 30px rgba(0,0,0,0.5);
 }
-.pipe{
+
+/* Camadas de fundo com efeito parallax */
+.background-layer {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-repeat: repeat-x;
+    background-size: auto 100%;
+}
+
+.far-clouds {
+    background-image: url('../img/far-clouds.png');
+    animation: far-clouds-animation 60s infinite linear;
+    opacity: 0.7;
+}
+
+.mountains {
+    background-image: url('../img/mountains.png');
+    bottom: 15px;
+    height: 30%;
+    animation: mountains-animation 30s infinite linear;
+}
+
+/* HUD (Heads-Up Display) */
+.hud {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 100;
+    display: flex;
+    gap: 20px;
+}
+
+.lives, .score, .level {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(0,0,0,0.7);
+    padding: 10px;
+    border-radius: 10px;
+    color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    border: 2px solid rgba(255,255,255,0.1);
+}
+
+.life-icon {
+    width: 30px;
+    height: 30px;
+}
+
+/* Elementos do jogo */
+.pipe {
     position: absolute;
     bottom: 0;
     width: 80px;
     animation: pipe-animation 1.1s infinite linear;
-   
-
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
 }
-.mario{
+
+.mario {
     width: 150px;
     position: absolute;
     bottom: 0;
-    
+    transition: transform 0.1s;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.3));
+    z-index: 10;
 }
-.final-game{
-   position: absolute;
-    width: 250px; 
+
+.mario.jumping {
+    transform: rotate(-10deg);
 }
-.final-game-container{
+
+.final-game {
+    position: absolute;
+    width: 250px;
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.5));
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+    z-index: 100;
+}
+
+.final-game-container {
+    position: absolute;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
+    align-items: center;
+    z-index: 99;
 }
 
-.jump{
-    animation: jump 500ms  ease-out;
+.jump {
+    animation: jump 500ms ease-out;
 }
 
-.clouds{
+.clouds {
     position: absolute;
     width: 550px;
     animation: clouds-animation 20s infinite linear;
-}
-.container-banner{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-}
-.banner-1{
-    margin-top: 10px;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-}
-.span-pontos{
-    font-size: 40px;
-    color: gold;
-    border: 3px dashed black;
-    padding: 2px 8px;
-    margin-left: 8px;
-}
-.placar{
-    padding: 8px;
-    color: rgba(7, 7, 7, 0.89);
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-}
-.banner-cont{
-    display: flex;
-    justify-content: center;
-}
-.banner{
-    width: 100%;
-    max-width: 300px;
-   
-   
-}
-.coleta-dados{
-    position: absolute;
-    background-color: rgba(0, 0, 0, 0.7);
-    width: 100%;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-formacoleta{
-    background-color: aliceblue;
-   height: 50px;
-   padding: 20px;
-}
-.hiden{
-    visibility: hidden;
-}
-@keyframes pipe-animation {
-    from{
-        right: -80px;
-    }
-    to{
-right: 100%;
-    }
-}
-@keyframes jump{
-0%{
-    bottom: 0;
-}
-40%{
-    bottom: 180px;
-}
-50%{
-    bottom: 180px;
-}
-60%{
-    bottom: 180px;
-}
-100%{
-    bottom: 0;
+    opacity: 0.9;
+    top: 50px;
 }
 
+/* Animações Lottie */
+.lottie-animation {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    z-index: 20;
+    pointer-events: none;
 }
-@keyframes clouds-animation {
-    from{
-        right: -550px;
+
+.lottie-animation-modal {
+    width: 150px;
+    height: 150px;
+    margin: 0 auto;
+}
+
+/* Efeitos visuais */
+.effect {
+    position: absolute;
+    pointer-events: none;
+    z-index: 30;
+}
+
+#level-up-effect {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 48px;
+    color: gold;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.5s, transform 0.5s;
+}
+
+#level-up-effect.active {
+    opacity: 1;
+    transform: translate(-50%, -100%);
+}
+
+#coin-collect-effect {
+    font-size: 24px;
+    color: gold;
+    text-shadow: 0 0 5px rgba(255, 215, 0, 0.7);
+    opacity: 0;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+#coin-collect-effect.active {
+    opacity: 1;
+    transform: translateY(-20px);
+}
+
+/* Modal de recorde */
+.coleta-dados {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #333;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 0 30px rgba(255,215,0,0.5);
+    border: 3px solid gold;
+    color: white;
+    max-width: 90%;
+    width: 400px;
+}
+
+.modal-content h2 {
+    color: gold;
+    margin-bottom: 20px;
+    text-shadow: 0 0 10px rgba(255,215,0,0.5);
+}
+
+.form-group {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group input {
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #555;
+    border-radius: 5px;
+    background: #222;
+    color: white;
+}
+
+.form-group input:focus {
+    border-color: gold;
+    outline: none;
+    box-shadow: 0 0 10px rgba(255,215,0,0.3);
+}
+
+/* Controles e informações */
+.controls {
+    text-align: center;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.container-banner {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+    padding: 20px;
+    background: rgba(255,255,255,0.05);
+    border-radius: 10px;
+    box-shadow: inset 0 0 20px rgba(0,0,0,0.3);
+}
+
+.banner-1 {
+    display: flex;
+    align-items: center;
+}
+
+.banner {
+    max-width: 300px;
+    filter: drop-shadow(0 0 10px rgba(255,255,255,0.3));
+}
+
+.recordes {
+    background: rgba(0,0,0,0.3);
+    padding: 20px;
+    border-radius: 10px;
+    color: white;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.recordes h5 {
+    color: gold;
+    margin-bottom: 10px;
+    text-shadow: 0 0 5px rgba(255,215,0,0.5);
+}
+
+.hiden {
+    display: none;
+}
+
+/* Animações */
+@keyframes pipe-animation {
+    from {
+        right: -80px;
     }
-    to{
+    to {
         right: 100%;
     }
+}
+
+@keyframes jump {
+    0% {
+        bottom: 0;
+    }
+    40% {
+        bottom: 180px;
+    }
+    50% {
+        bottom: 180px;
+    }
+    60% {
+        bottom: 180px;
+    }
+    100% {
+        bottom: 0;
+    }
+}
+
+@keyframes clouds-animation {
+    from {
+        right: -550px;
+    }
+    to {
+        right: 100%;
+    }
+}
+
+@keyframes far-clouds-animation {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -1000px 0;
+    }
+}
+
+@keyframes mountains-animation {
+    from {
+        background-position: 0 0;
+    }
+    to {
+        background-position: -500px 0;
+    }
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .hud {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .container-banner {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-board {
+        height: 400px;
+    }
+    
+    .mario {
+        width: 120px;
+    }
+    
+    .pipe {
+        width: 60px;
+    }
+}
+
+/* Botão de som */
+#toggle-sound {
+    position: relative;
+    width: 50px;
+    height: 50px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+}
+
+#toggle-sound span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.3s;
+}
+
+#toggle-sound .sound-on,
+#toggle-sound .sound-off {
+    opacity: 1;
+}
+
+#toggle-sound .hiden {
+    opacity: 0;
+    pointer-events: none;
 }

@@ -6,49 +6,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mario Jump</title>
     <link rel="stylesheet" href="./css/style.css">
+    <!-- Biblioteca Lottie -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.9.6/lottie.min.js"></script>
 </head>
 <body>
-
     <div class="game-board">
+        <div class="hud">
+            <div class="lives">
+                <img src="./img/mario-mini.png" class="life-icon">
+                <span id="lives-count">3</span>
+            </div>
+            <div class="score">
+                <span>PONTOS:</span>
+                <span id="pontos">0</span>
+            </div>
+            <div class="level">
+                <span>NÍVEL:</span>
+                <span id="nivel">1</span>
+            </div>
+        </div>
+        
+        <!-- Elementos de fundo com efeito parallax -->
+        <div class="background-layer far-clouds"></div>
         <img src="./img/clouds.png" class="clouds">
+        <div class="background-layer mountains"></div>
+        
+        <!-- Elementos de jogo -->
         <img src="./img/mario.gif" class="mario">
         <img src="./img/pipe.png" class="pipe">
-       <div class="final-game-container"> <img src="" class="final-game"></div>
-     
- </div>
- <div class="coleta-dados hiden" id="coleta-dados-esconde">
-    <div>
-       
-            <label for="nome-jogador-inicio">Digite seu Nome:</label>
-           <input type="text" id="nome-jogador-inicio">
-           <button  id="reiniciar-jogo-recorde">Reiniciar Jogo</button>
         
+        <!-- Contêineres para animações Lottie -->
+        <div id="coin-animation" class="lottie-animation"></div>
+        <div id="powerup-animation" class="lottie-animation"></div>
+        <div id="star-animation" class="lottie-animation"></div>
+        
+        <!-- Efeitos visuais -->
+        <div id="level-up-effect" class="effect"></div>
+        <div id="coin-collect-effect" class="effect"></div>
+        
+        <div class="final-game-container">
+            <img src="" class="final-game">
+        </div>
     </div>
-    
-</div>
- <div class="banner-cont">
-    
-     <p class="placar">Seus Pontos:<span class="span-pontos" id="pontos">0</span></p>
-     
- </div>
- <div ><button id="reiniciar-jogo">Salvar e Continuar</button></div>
- <div class="container-banner">
-    
-    <div class="banner-1">
-        <img src="./img/supermario.png" class="banner">
-    </div>
-    <div class="banner-1 recordes">
-        <h5>Recordes:</h5>
-       <p><span id="nome-jogador"> </span>: <span id="pontuacao-recorde">  </span></p>
-    </div>
-   
 
- </div>
- <audio id="musica-game" src="./music/mario-game-over.mp3"></audio>
- <audio id="musica-game-join" autoplay loop>
-   <source src="./music/musica-game.mp3" type="audio/mp3"> 
- </audio>
+    <!-- Modal de Game Over -->
+    <div class="coleta-dados hiden" id="coleta-dados-esconde">
+        <div class="modal-content">
+            <div id="trophy-animation" class="lottie-animation-modal"></div>
+            <h2>Novo Recorde!</h2>
+            <div class="form-group">
+                <label for="nome-jogador-inicio">Digite seu Nome:</label>
+                <input type="text" id="nome-jogador-inicio">
+                <button id="reiniciar-jogo-recorde">Salvar Recorde</button>
+            </div>
+        </div>
+    </div>
 
+    <!-- Painel de informações -->
+    <div class="container-banner">
+        <div class="banner-1">
+            <img src="./img/supermario.png" class="banner">
+        </div>
+        <div class="banner-1 recordes">
+            <h5>Recordes:</h5>
+            <p><span id="nome-jogador"></span>: <span id="pontuacao-recorde"></span></p>
+        </div>
+    </div>
+
+    <!-- Controles -->
+    <div class="controls">
+        <button id="reiniciar-jogo" class="btn-primary">Jogar Novamente</button>
+        <button id="toggle-sound" class="btn-secondary">
+            <span class="sound-on">🔊</span>
+            <span class="sound-off hiden">🔇</span>
+        </button>
+    </div>
+
+    <!-- Áudios -->
+    <audio id="musica-game" src="./music/mario-game-over.mp3"></audio>
+    <audio id="musica-game-join" autoplay loop>
+        <source src="./music/musica-game.mp3" type="audio/mp3">
+    </audio>
+    <audio id="coin-sound" src="./music/coin.mp3"></audio>
+    <audio id="jump-sound" src="./music/jump.mp3"></audio>
+    <audio id="powerup-sound" src="./music/powerup.mp3"></audio>
+    <audio id="level-up-sound" src="./music/level-up.mp3"></audio>
+
+    <!-- Scripts -->
+    <script src="./js/lottie-animations.js"></script>
     <script src="./js/script.js"></script>
 </body>
 </html>
